@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_cubit_api_demo/cubit/posts_cubit.dart';
 
 import 'view/posts_view.dart';
 
@@ -16,7 +17,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: PostsView(),
+      debugShowCheckedModeBanner: false,
+      home: BlocProvider<PostsCubit>(
+        create: (_) => PostsCubit()..getPosts(),
+        child: PostsView(),
+      ),
     );
   }
 }

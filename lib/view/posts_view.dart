@@ -4,17 +4,19 @@ import 'package:flutter_bloc_cubit_api_demo/cubit/posts_cubit.dart';
 import 'package:flutter_bloc_cubit_api_demo/post_modal.dart';
 
 class PostsView extends StatelessWidget {
+  const PostsView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Posts'),
+        title: const Text('Posts'),
         centerTitle: true,
       ),
       body: BlocBuilder<PostsCubit, List<Post>>(
         builder: (context, posts) {
           if (posts.isEmpty) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

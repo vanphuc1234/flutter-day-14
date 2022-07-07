@@ -1,8 +1,5 @@
-import 'package:flutter_bloc_cubit_api_demo/data_service.dart';
-import 'package:flutter_bloc_cubit_api_demo/post_modal.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../data_service.dart';
 import '../post_modal.dart';
 
 class PostsCubit extends Cubit<List<Post>> {
@@ -13,7 +10,6 @@ class PostsCubit extends Cubit<List<Post>> {
   void getPosts() async => emit(await _dataService.getPosts());
 }
 
-//------------------------------------------------------------------------------
 abstract class PostsEvent {}
 
 class LoadPostsEvent extends PostsEvent {}
@@ -39,14 +35,13 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
 
   PostsBloc() : super(LoadingPostsState());
 
-  @override
   Stream<PostsState> mapEventToState(PostsEvent event) async* {
     if (event is LoadPostsEvent || event is PullToRefreshEvent) {
       yield LoadingPostsState();
 
       try {
-        final posts = await _dataService.getPosts();
-        yield LoadedPostsState(posts: posts);
+        final p = await _dataService.getPosts();
+        yield LoadedPostsState(posts: p);
       } catch (e) {
         yield FailedToLoadPostsState(error: e as Error);
       }

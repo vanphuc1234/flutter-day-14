@@ -1,16 +1,14 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import 'post_modal.dart';
+import 'package:http/http.dart' as http;
+import './post_modal.dart';
 
 class DataService {
-  final baseUrl = 'jsonplaceholder.typicode.com';
+  final _baseUrl = 'jsonplaceholder.typicode.com';
 
-  // function get JSON data
   Future<List<Post>> getPosts() async {
     try {
-      final url = Uri.https(baseUrl, '/posts');
-      final response = await http.get(url);
+      final uri = Uri.https(_baseUrl, '/posts');
+      final response = await http.get(uri);
       final json = jsonDecode(response.body) as List;
       final posts = json.map((postJson) => Post.fromJson(postJson)).toList();
       return posts;

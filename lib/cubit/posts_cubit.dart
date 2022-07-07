@@ -47,16 +47,6 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     }
   }
 }
-  // void _onPullToRefreashEvent(
-  //     PullToRefreshEvent event, Emitter<PostsState> emit) async {
-  //   emit(LoadingPostsState());
-  //   try {
-  //     final p = await _dataService.getPosts();
-  //     emit(LoadedPostsState(posts: p));
-  //   } catch (e) {
-  //     emit(FailedToLoadPostsState());
-  //   }
-  // }
 
 
 

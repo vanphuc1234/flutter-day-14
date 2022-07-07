@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_cubit_api_demo/cubit/nav_cubit.dart';
 import '../cubit/posts_cubit.dart';
 
 class PostsView extends StatelessWidget {
@@ -27,6 +28,11 @@ class PostsView extends StatelessWidget {
                     return Card(
                       child: ListTile(
                         title: Text(state.posts?[index].title as String),
+                        onTap: () {
+                          BlocProvider.of<NavCubit>(context)
+                              .showPostDetails(state.posts![index]);
+                          BlocProvider.of<NavCubit>(context).popToPosts();
+                        },
                       ),
                     );
                   }),

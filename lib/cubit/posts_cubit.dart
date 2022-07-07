@@ -48,3 +48,4 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     }
   }
 }
+//git config --global --add safe.directory *

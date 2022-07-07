@@ -33,19 +33,31 @@ class FailedToLoadPostsState extends PostsState {
 class PostsBloc extends Bloc<PostsEvent, PostsState> {
   final _dataService = DataService();
 
-  PostsBloc() : super(LoadingPostsState());
-
-  Stream<PostsState> mapEventToState(PostsEvent event) async* {
-    if (event is LoadPostsEvent || event is PullToRefreshEvent) {
-      yield LoadingPostsState();
-
-      try {
-        final p = await _dataService.getPosts();
-        yield LoadedPostsState(posts: p);
-      } catch (e) {
-        yield FailedToLoadPostsState(error: e as Error);
-      }
+  PostsBloc() : super(LoadingPostsState()) {
+    on<LoadPostsEvent>(_onLoadPostsEvent);
+    on<PullToRefreshEvent>(_onLoadPostsEvent);
+  }
+  void _onLoadPostsEvent(event, Emitter<PostsState> emit) async {
+    emit(LoadingPostsState());
+    try {
+      final p = await _dataService.getPosts();
+      emit(LoadedPostsState(posts: p));
+    } catch (e) {
+      emit(FailedToLoadPostsState(error: e as Error));
     }
   }
 }
+  // void _onPullToRefreashEvent(
+  //     PullToRefreshEvent event, Emitter<PostsState> emit) async {
+  //   emit(LoadingPostsState());
+  //   try {
+  //     final p = await _dataService.getPosts();
+  //     emit(LoadedPostsState(posts: p));
+  //   } catch (e) {
+  //     emit(FailedToLoadPostsState());
+  //   }
+  // }
+
+
+
 //git config --global --add safe.directory *
